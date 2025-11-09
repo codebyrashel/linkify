@@ -1,0 +1,17 @@
+services:
+  tinybird-local:
+    image: tinybirdco/tinybird-local:latest
+    platform: linux/amd64
+    container_name: tinybird-local
+    ports:
+      - "7181:7181"
+    environment:
+      - COMPATIBILITY_MODE=1
+    volumes:
+      - tinybird_data:/var/lib/tinybird
+    restart: unless-stopped
+
+volumes:
+  tinybird_data:
+    driver: local
+
