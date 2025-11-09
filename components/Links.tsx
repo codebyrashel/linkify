@@ -1,11 +1,16 @@
 "use client";
 
 import { api } from "@/convex/_generated/api";
-import { Doc } from "@/convex/_generated/dataModel";
 import { trackLinkClick } from "@/lib/analytics";
 import { Preloaded, usePreloadedQuery } from "convex/react";
 import { ArrowUpRight } from "lucide-react";
 import { useParams } from "next/navigation";
+
+type Link = {
+  _id: string;
+  title: string;
+  url: string;
+};
 
 function Links({
     preloadedLinks,
@@ -16,7 +21,7 @@ function Links({
     const params = useParams();
     const username = params.username as string;
 
-    const handleLinkClick = async (link: Doc<"links">) => {
+    const handleLinkClick = async (link: Link) => {
         // Track the click before navigation
         await trackLinkClick({
           profileUsername: username,
@@ -44,7 +49,7 @@ function Links({
 
     return (
         <div className="space-y-4">
-            {links.map((link, index) => (
+            {links.map((link) => (
                 <a
                     key={link._id}
                     href={link.url}

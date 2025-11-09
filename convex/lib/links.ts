@@ -31,7 +31,7 @@ export const getLinksBySlug = query({
     v.object({
       _id: v.id("links"),
       _creationTime: v.number(),
-      _userId: v.string(),
+      userId: v.string(),
       title: v.string(),
       url: v.string(),
       order: v.number(),
@@ -58,11 +58,8 @@ export const getLinksBySlug = query({
       .order("asc")
       .collect();
 
-    // Map userId to _userId to match the expected return type
-    return links.map(({ userId, ...rest }) => ({
-      ...rest,
-      _userId: userId,
-    }));
+    // Return links directly - they already have the correct structure with userId
+    return links;
   },
 });
 
